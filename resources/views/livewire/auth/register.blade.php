@@ -1,7 +1,4 @@
-@extends('auth.main-auth')
-
-@section('content')
-<!-- Login -->
+<!-- Register Card -->
 <div class="card">
     <div class="card-body">
 
@@ -47,67 +44,51 @@
         </div>
         <!-- /Logo -->
 
-        <form class="mb-3" action="" method="POST">
-            @csrf
+        <form class="mb-3" wire:submit.prevent="register">
+            <div class="mb-3">
+                <label for="username" class="form-label">Tên tài khoản</label>
+                <input wire:model="username" class="form-control @error('username') is-invalid @enderror" type="text" id="username" name="username" placeholder="Nhập tên tài khoản" />
+                @error('username')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
 
             <div class="mb-3">
-                <label for="email-username" class="form-label">Tên tài khoản hoặc E-mail</label>
-                <input class="form-control @error('email-username') is-invalid @enderror" type="text" id="email-username" name="email-username" value="{{ old('email-username') }}" placeholder="Nhập tài khoản hoặc E-mail" />
-                @error('email-username')
+                <label for="email" class="form-label">E-mail</label>
+                <input wire:model="email" class="form-control @error('email') is-invalid @enderror" type="text" id="email" name="email" placeholder="Nhập E-mail" />
+                @error('email')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="mb-3 form-password-toggle">
-
-                <div class="d-flex justify-content-between">
-                    <label class="form-label" for="password">Mật khẩu</label>
-                </div>
-
+                <label class="form-label" for="password">Mật khẩu</label>
                 <div class="input-group input-group-merge">
-                    <input class="form-control @error('password') is-invalid @enderror" type="password" id="password" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
-                    <span class=" input-group-text cursor-pointer">
+                    <input wire:model="password" class="form-control @error('password') is-invalid @enderror" type="password" id="password" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                    <span class="input-group-text cursor-pointer">
                         <i class="bx bx-hide"></i>
                     </span>
                     @error('password')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-
             </div>
 
-            <div class="d-flex justify-content-end">
-                <a href="forgot-password">
-                    <small>Quên mật khẩu?</small>
-                </a>
-            </div>
+            <button type="submit" class="btn btn-primary d-grid w-100">Đăng ký</button>
 
-            <div class="mb-3">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="remember-me" name="remember-me" />
-                    <label class="form-check-label" for="remember-me"> Nhớ mật khẩu </label>
-                </div>
+            @if (session()->has('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
             </div>
-
-            <div class="mb-3">
-                <button class="btn btn-primary d-grid w-100" type="submit">Đăng nhập</button>
-                @if (session('error'))
-                <div class="invalid-feedback" style="display: block;">
-                    {{ session('error') }}
-                </div>
-                @endif
-            </div>
-
+            @endif
         </form>
 
         <p class="text-center">
-            <span>Bạn chưa có tài khoản?</span>
-            <a href="register">
-                <span>Tạo tài khoản mới</span>
+            <span>Bạn đã có tài khoản?</span>
+            <a href="login">
+                <span>Đăng nhập</span>
             </a>
         </p>
-
     </div>
 </div>
-<!-- /Login -->
-@endsection
+<!-- Register Card -->

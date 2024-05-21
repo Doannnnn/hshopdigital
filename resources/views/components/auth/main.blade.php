@@ -4,27 +4,24 @@
 
 <head>
 
-    @include('auth.layout.header')
+    @include('components.auth.layout.header')
 
 </head>
 
 <body>
-
     <!-- Content -->
     <div class="container-xxl">
         <div class="authentication-wrapper authentication-basic container-p-y">
             <div class="authentication-inner">
 
-                @yield('content')
+                {{ $slot }}
 
             </div>
         </div>
     </div>
     <!-- / Content -->
 
-    @include('auth.layout.footer')
-
-    @livewireScriptsSS
+    @include('components.auth.layout.footer')
 
 </body>
 

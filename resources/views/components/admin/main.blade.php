@@ -4,7 +4,7 @@
 
 <head>
 
-    @include('admin.layout.header')
+    @include('components.admin.layout.header')
 
 </head>
 
@@ -14,17 +14,17 @@
 
         <div class="layout-container">
 
-            @include('admin.layout.menu')
+            @include('components.admin.layout.menu')
 
             <!-- Layout container -->
             <div class="layout-page">
 
-                @include('admin.layout.navbar')
+                @include('components.admin.layout.navbar')
 
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
 
-                    @yield('content')
+                    {{ $slot }}
 
                 </div>
                 <!-- Content wrapper -->
@@ -37,7 +37,7 @@
     </div>
     <!-- / Layout wrapper -->
 
-    @include('admin.layout.footer')
+    @include('components.admin.layout.footer')
 
 </body>
 

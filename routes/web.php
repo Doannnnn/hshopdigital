@@ -1,5 +1,9 @@
 <?php
 
+use App\Livewire\Admin\Dashboard;
+use App\Livewire\Auth\ForgotPassword;
+use App\Livewire\Auth\Login;
+use App\Livewire\Auth\Register;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,18 +17,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('admin.layout.dashboard');
-});
+Route::get('/', Dashboard::class)->middleware('auth');
 
-Route::get('/login', function () {
-    return view('auth.layout.login', ['title' => 'Đăng nhập']);
-});
+Route::get('/logout', [Login::class, 'logout']);
 
-Route::get('/register', function () {
-    return view('auth.layout.register', ['title' => 'Đăng ký']);
-});
+Route::middleware('guest')->group(function () {
 
-Route::get('/forgot-password', function () {
-    return view('auth.layout.forgot-password', ['title' => 'Quên mật khẩu']);
+    Route::get('/login', Login::class)->name('login');
+
+    Route::get('/register', Register::class)->name('register');
+
+    Route::get('/forgot-password', ForgotPassword::class)->name('forgot-password');
 });

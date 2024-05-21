@@ -1,13 +1,10 @@
-@extends('auth.main-auth')
-
-@section('content')
-<!-- Forgot Password -->
+<!-- Login -->
 <div class="card">
     <div class="card-body">
 
         <!-- Logo -->
         <div class="app-brand justify-content-center">
-            <a href="index.html" class="app-brand-link gap-2">
+            <a href="#" class="app-brand-link gap-2">
                 <span class="app-brand-logo demo">
                     <svg width="25" viewBox="0 0 25 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <defs>
@@ -46,27 +43,66 @@
             </a>
         </div>
         <!-- /Logo -->
-
-        <h4 class="mb-2">Quên mật khẩu? 🔒</h4>
-        <p class="mb-4">Vui lòng nhập tên đăng nhập hoặc địa chỉ email. Bạn sẽ nhận được một liên kết tạo mật khẩu mới qua email.</p>
-
-        <form class="mb-3" action="" method="POST">
-
+        <form class="mb-3" wire:submit.prevent="login">
+            @csrf
             <div class="mb-3">
-                <label class="form-label" for="email-username">Tên đăng nhập hoặc E-mail</label>
-                <input class="form-control" type="text" id="email-username" name="email-username" />
+                <label for="email_username" class="form-label">Tên tài khoản hoặc E-mail</label>
+                <input class="form-control @error('email_username') is-invalid @enderror" type="text" id="email_username" wire:model="email_username" value="{{ old('email_username') }}" placeholder="Nhập tài khoản hoặc E-mail" />
+                @error('email_username')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
 
-            <button class="btn btn-primary d-grid w-100">Đặt lại mật khẩu</button>
+            <div class="mb-3 form-password-toggle">
+
+                <div class="d-flex justify-content-between">
+                    <label class="form-label" for="password">Mật khẩu</label>
+                </div>
+
+                <div class="input-group input-group-merge">
+                    <input class="form-control @error('password') is-invalid @enderror" type="password" id="password" wire:model="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                    <span class=" input-group-text cursor-pointer">
+                        <i class="bx bx-hide"></i>
+                    </span>
+                    @error('password')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+            </div>
+
+            <div class="d-flex justify-content-end">
+                <a href="forgot-password">
+                    <small>Quên mật khẩu?</small>
+                </a>
+            </div>
+
+            <div class="mb-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="remember-me" name="remember-me" />
+                    <label class="form-check-label" for="remember-me"> Nhớ mật khẩu </label>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <button class="btn btn-primary d-grid w-100" type="submit">Đăng nhập</button>
+
+                @if (session()->has('error'))
+                <div class="alert alert-danger" role="alert">
+                    {{ session('error') }}
+                </div>
+                @endif
+            </div>
 
         </form>
-        <div class="text-center">
-            <a href="login" class="d-flex align-items-center justify-content-center">
-                <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
-                Quay lại đăng nhập
+
+        <p class="text-center">
+            <span>Bạn chưa có tài khoản?</span>
+            <a href="register">
+                <span>Tạo tài khoản mới</span>
             </a>
-        </div>
+        </p>
+
     </div>
 </div>
-<!-- /Forgot Password -->
-@endsection
+<!-- /Login -->

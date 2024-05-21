@@ -1,13 +1,10 @@
-@extends('auth.main-auth')
-
-@section('content')
-<!-- Register Card -->
+<!-- Forgot Password -->
 <div class="card">
     <div class="card-body">
 
         <!-- Logo -->
         <div class="app-brand justify-content-center">
-            <a href="#" class="app-brand-link gap-2">
+            <a href="index.html" class="app-brand-link gap-2">
                 <span class="app-brand-logo demo">
                     <svg width="25" viewBox="0 0 25 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <defs>
@@ -47,48 +44,25 @@
         </div>
         <!-- /Logo -->
 
+        <h4 class="mb-2">Quên mật khẩu? 🔒</h4>
+        <p class="mb-4">Vui lòng nhập tên đăng nhập hoặc địa chỉ email. Bạn sẽ nhận được một liên kết tạo mật khẩu mới qua email.</p>
+
         <form class="mb-3" action="" method="POST">
-            @csrf
 
             <div class="mb-3">
-                <label for="username" class="form-label">Tên tài khoản</label>
-                <input class="form-control @error('username') is-invalid @enderror" type="text" id="username" name="username" value="{{ old('username') }}" placeholder="Nhập tên tài khoản" />
-                @error('username')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                <label class="form-label" for="email-username">Tên đăng nhập hoặc E-mail</label>
+                <input class="form-control" type="text" id="email-username" name="email-username" />
             </div>
 
-            <div class="mb-3">
-                <label for="email" class="form-label">E-mail</label>
-                <input class="form-control @error('email') is-invalid @enderror" type="text" id="email" name="email" value="{{ old('email') }}" placeholder="Nhập E-mail" />
-                @error('email')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
+            <button class="btn btn-primary d-grid w-100">Đặt lại mật khẩu</button>
 
-            <div class="mb-3 form-password-toggle">
-                <label class="form-label" for="password">Mật khẩu</label>
-                <div class="input-group input-group-merge">
-                    <input class="form-control @error('password') is-invalid @enderror" type="password" id="password" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
-                    <span class="input-group-text cursor-pointer">
-                        <i class="bx bx-hide"></i>
-                    </span>
-                    @error('password')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-            </div>
-
-            <button class="btn btn-primary d-grid w-100">Đăng ký</button>
         </form>
-
-        <p class="text-center">
-            <span>Bạn đã có tài khoản?</span>
-            <a href="login">
-                <span>Đăng nhập</span>
+        <div class="text-center">
+            <a href="login" class="d-flex align-items-center justify-content-center">
+                <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
+                Quay lại đăng nhập
             </a>
-        </p>
+        </div>
     </div>
 </div>
-<!-- Register Card -->
-@endsection
+<!-- /Forgot Password -->

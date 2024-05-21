@@ -1,7 +1,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-<title>{{ $title }} - Công ty TNHH Thương mại & Dịch vụ Bạch Minh Quân | Công ty TNHH Thương mại & Dịch vụ Bạch Minh Quân</title>
+<title>{{ session('title') ?? $title }} - Công ty TNHH Thương mại & Dịch vụ Bạch Minh Quân | Công ty TNHH Thương mại & Dịch vụ Bạch Minh Quân</title>
 
 <meta name="description" content="" />
 
@@ -24,11 +24,11 @@
 <!-- Vendors CSS -->
 <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
-<!-- Page CSS -->
-<!-- Page -->
-<link rel="stylesheet" href="/assets/vendor/css/pages/page-auth.css" />
+<link rel="stylesheet" href="/assets/vendor/libs/apex-charts/apex-charts.css" />
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+<!-- Page CSS -->
 
 <!-- Helpers -->
 <script src="/assets/vendor/js/helpers.js"></script>
