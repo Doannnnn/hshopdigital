@@ -50,8 +50,8 @@
         <form class="mb-3" action="" method="POST">
 
             <div class="mb-3">
-                <label class="form-label" for="email-username">Tên đăng nhập hoặc E-mail</label>
-                <input class="form-control" type="text" id="email-username" name="email-username" />
+                <label class="form-label" for="email_userName">Tên đăng nhập hoặc E-mail</label>
+                <input class="form-control" type="text" id="email_userName" name="email_userName" />
             </div>
 
             <button class="btn btn-primary d-grid w-100">Đặt lại mật khẩu</button>

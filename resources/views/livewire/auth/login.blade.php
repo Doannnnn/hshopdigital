@@ -46,9 +46,9 @@
         <form class="mb-3" wire:submit.prevent="login">
             @csrf
             <div class="mb-3">
-                <label for="email_username" class="form-label">Tên tài khoản hoặc E-mail</label>
-                <input class="form-control @error('email_username') is-invalid @enderror" type="text" id="email_username" wire:model="email_username" value="{{ old('email_username') }}" placeholder="Nhập tài khoản hoặc E-mail" />
-                @error('email_username')
+                <label class="form-label" for="email_userName">Tên tài khoản hoặc E-mail <span class="required">*</span></label>
+                <input class="form-control @error('email_userName') is-invalid @enderror" type="text" wire:model="email_userName" id="email_userName" value="{{ old('email_userName') }}" placeholder="Nhập tài khoản hoặc E-mail" />
+                @error('email_userName')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
@@ -56,11 +56,11 @@
             <div class="mb-3 form-password-toggle">
 
                 <div class="d-flex justify-content-between">
-                    <label class="form-label" for="password">Mật khẩu</label>
+                    <label class="form-label" for="password">Mật khẩu <span class="required">*</span></label>
                 </div>
 
                 <div class="input-group input-group-merge">
-                    <input class="form-control @error('password') is-invalid @enderror" type="password" id="password" wire:model="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                    <input class="form-control @error('password') is-invalid @enderror" type="password" wire:model="password" id="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
                     <span class=" input-group-text cursor-pointer">
                         <i class="bx bx-hide"></i>
                     </span>

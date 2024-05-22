@@ -46,25 +46,25 @@
 
         <form class="mb-3" wire:submit.prevent="register">
             <div class="mb-3">
-                <label for="username" class="form-label">Tên tài khoản</label>
-                <input wire:model="username" class="form-control @error('username') is-invalid @enderror" type="text" id="username" name="username" placeholder="Nhập tên tài khoản" />
-                @error('username')
+                <label class="form-label" for="user_name">Tên tài khoản <span class="required">*</span></label>
+                <input class="form-control @error('user_name') is-invalid @enderror" type="text" wire:model="user_name" id="user_name" placeholder="Nhập tên tài khoản" />
+                @error('user_name')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="mb-3">
-                <label for="email" class="form-label">E-mail</label>
-                <input wire:model="email" class="form-control @error('email') is-invalid @enderror" type="text" id="email" name="email" placeholder="Nhập E-mail" />
+                <label class="form-label" for="email">E-mail <span class="required">*</span></label>
+                <input class="form-control @error('email') is-invalid @enderror" type="text" wire:model="email" id="email" placeholder="Nhập E-mail" />
                 @error('email')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="mb-3 form-password-toggle">
-                <label class="form-label" for="password">Mật khẩu</label>
+                <label class="form-label" for="password">Mật khẩu <span class="required">*</span></label>
                 <div class="input-group input-group-merge">
-                    <input wire:model="password" class="form-control @error('password') is-invalid @enderror" type="password" id="password" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                    <input class="form-control @error('password') is-invalid @enderror" type="password" wire:model="password" id="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
                     <span class="input-group-text cursor-pointer">
                         <i class="bx bx-hide"></i>
                     </span>

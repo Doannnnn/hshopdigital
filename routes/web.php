@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Admin\Dashboard;
+use App\Livewire\Admin\Profile;
 use App\Livewire\Auth\ForgotPassword;
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
@@ -17,9 +18,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', Dashboard::class)->middleware('auth');
+Route::middleware('auth')->group(function () {
 
-Route::get('/logout', [Login::class, 'logout']);
+    Route::prefix('admin')->group(function () {
+
+        Route::get('/', Dashboard::class)->name('admin');
+
+        Route::get('/profile', Profile::class)->name('profile');
+    });
+});
+
+Route::get('/logout', [Login::class, 'logout'])->name('logout');
 
 Route::middleware('guest')->group(function () {
 

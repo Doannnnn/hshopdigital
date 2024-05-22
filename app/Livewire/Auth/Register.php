@@ -10,34 +10,29 @@ use Illuminate\Support\Facades\Session;
 
 class Register extends Component
 {
-    public $username;
+    public $user_name;
     public $email;
     public $password;
     public $role_id = 3;
-
-    public function rules()
-    {
-        return [
-            'username' => 'required|unique:users|max:255',
-            'email' => 'required|email|unique:users|max:255',
-            'password' => 'required|min:8',
-        ];
-    }
 
     public function render()
     {
         Session::flash('title', 'Đăng ký');
 
-        return view('livewire.auth.register')->with(['title' => 'Đăng ký']);
+        return view('livewire.auth.register');
     }
 
     public function register()
     {
-        $this->validate();
+        $this->validate([
+            'user_name' => 'required|unique:users|max:255',
+            'email' => 'required|email|unique:users|max:255',
+            'password' => 'required|min:6',
+        ]);
 
         try {
             User::create([
-                'username' => $this->username,
+                'user_name' => $this->user_name,
                 'email' => $this->email,
                 'password' => Hash::make($this->password),
                 'role_id' => $this->role_id,

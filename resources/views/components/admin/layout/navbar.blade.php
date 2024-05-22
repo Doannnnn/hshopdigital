@@ -23,20 +23,21 @@
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                        <img src="{{ session('user')->avatar ?? '/assets/img/avatars/avatar.jpg' }}" alt class="w-px-40 h-auto rounded-circle" />
+                        <img src="{{asset(session('user')->avatar) ?? '/assets/img/avatars/avatar.jpg' }}" alt class="w-px-40 h-auto rounded-circle" />
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="{{ route('profile') }}">
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
-                                        <img src="{{ session('user')->avatar ?? '/assets/img/avatars/avatar.jpg' }}" alt class="w-px-40 h-auto rounded-circle" />
+                                        <img src="{{asset(session('user')->avatar) ?? '/assets/img/avatars/avatar.jpg' }}" alt class="w-px-40 h-auto rounded-circle" />
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
-                                    <span class="fw-semibold d-block">{{ session('user')->first_name ?? session('user')->username }}</span>
+                                    <span class="fw-semibold d-block">
+                                        {{ session('user')->first_name ? session('user')->first_name . ' ' . session('user')->last_name : session('user')->user_name }}</span>
                                     <small class="text-muted">{{ session('user')->role->name }}</small>
                                 </div>
                             </div>
@@ -46,7 +47,7 @@
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="{{ route('profile') }}">
                             <i class="bx bx-user me-2"></i>
                             <span class="align-middle">Thông tin tài khoản</span>
                         </a>
@@ -55,7 +56,7 @@
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="/logout">
+                        <a class="dropdown-item" href="{{ route('logout') }}">
                             <i class="bx bx-power-off me-2"></i>
                             <span class="align-middle">Đăng xuất</span>
                         </a>
