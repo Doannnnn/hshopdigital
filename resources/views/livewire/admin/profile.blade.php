@@ -7,9 +7,14 @@
             <div class="card mb-4">
                 <h5 class="ps-5 pt-4 mb-0">Avatar</h5>
                 <!-- Account -->
-                <form id="formAccountSettings" wire:submit.prevent="update">
-                    <div class="card-body">
+                <form id="formProfile" wire:submit.prevent="update" wire:confirm="Xác nhận cập nhập hồ sơ!">
+                    <div class=" card-body">
                         <div class="d-flex align-items-start align-items-sm-center gap-4">
+                            <div class="loading-container" wire:loading wire:target="avatar">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
                             <img src="{{ $avatar ? $avatar->temporaryUrl() : (session('user')->avatar ? asset(session('user')->avatar) : asset('/assets/img/avatars/avatar.jpg')) }}" alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar" />
                             <div class="button-wrapper">
                                 @error('avatar')
@@ -18,7 +23,7 @@
 
                                 <p class="text-muted mb-4">Được phép JPG, GIF hoặc PNG. Kích thước tối đa 800K</p>
 
-                                <label for="upload" class="btn btn-primary me-2" tabindex="0">
+                                <label for="upload" class="btn btn-outline-primary me-2" tabindex="0">
                                     <span class="d-none d-sm-block">Tải ảnh mới </span>
                                     <i class="bx bx-upload d-block d-sm-none"></i>
                                     <input class="account-file-input" type="file" wire:model="avatar" id="upload" hidden accept="image/png, image/jpeg" />

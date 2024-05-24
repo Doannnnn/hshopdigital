@@ -43,8 +43,8 @@ class Profile extends Component
         $rules = [
             'first_name' => 'required',
             'last_name' => 'required',
-            'user_name' => 'required',
-            'email' => 'required|email',
+            'user_name' => 'required|unique:users',
+            'email' => 'required|email|unique:users',
         ];
 
         if (!empty($this->current_password)) {
@@ -70,8 +70,10 @@ class Profile extends Component
             'first_name.required' => 'Tên không được để trống.',
             'last_name.required' => 'Họ không được để trống.',
             'user_name.required' => 'Tên người dùng không được để trống.',
+            'user_name.unique' => 'Tên tài khoản đã tồn tại.',
             'email.required' => 'Email không được để trống.',
             'email.email' => 'Địa chỉ E-mail không hợp lệ.',
+            'email.unique' => 'E-mail đã tồn tại.',
             'current_password.required' => 'Mật khẩu hiện tại không được để trống.',
             'current_password.current_password' => 'Mật khẩu hiện tại không chính xác.',
             'new_password.required' => 'Mật khẩu mới không được để trống.',
@@ -115,9 +117,9 @@ class Profile extends Component
 
             session(['user' => $user]);
 
-            Session::flash('success', 'Cập nhật thông tin thành công.');
+            Session::flash('success', 'Cập nhật thành công.');
 
-            $this->reset(['current_password', 'new_password', 'confirm_new_password']);
+            redirect()->route('profile');
         } catch (Exception $e) {
             Session::flash('error', $e->getMessage());
 

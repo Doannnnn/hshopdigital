@@ -77,7 +77,7 @@
             <button type="submit" class="btn btn-primary d-grid w-100">Đăng ký</button>
 
             @if (session()->has('error'))
-            <div class="alert alert-danger" role="alert">
+            <div class="alert alert-danger">
                 {{ session('error') }}
             </div>
             @endif

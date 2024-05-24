@@ -6,6 +6,8 @@
 
     @include('components.admin.layout.header')
 
+    @livewireStyles
+
 </head>
 
 <body>
@@ -38,6 +40,8 @@
     <!-- / Layout wrapper -->
 
     @include('components.admin.layout.footer')
+
+    @livewireScripts
 
 </body>
 

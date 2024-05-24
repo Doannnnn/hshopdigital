@@ -7,7 +7,9 @@ use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Livewire\Attributes\Layout;
 
+#[Layout('components.auth.main')]
 class Register extends Component
 {
     public $user_name;
@@ -22,13 +24,31 @@ class Register extends Component
         return view('livewire.auth.register');
     }
 
+    public function rules()
+    {
+        return [
+            'user_name' => 'required|unique:users',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+        ];
+    }
+
+    public function messages()
+    {
+        return  [
+            'user_name.required' => 'Tên đăng nhập không được để trống.',
+            'user_name.unique' => 'Tên đăng nhập đã tồn tại.',
+            'email.required' => 'E-mail không được để trống.',
+            'email.email' => 'E-mail không hợp lệ.',
+            'email.unique' => 'E-mail đã tồn tại.',
+            'password.required' => 'Mật khẩu không được để trống.',
+            'password.min' => 'Mật khẩu ít nhất phải 6 ký tự.',
+        ];
+    }
+
     public function register()
     {
-        $this->validate([
-            'user_name' => 'required|unique:users|max:255',
-            'email' => 'required|email|unique:users|max:255',
-            'password' => 'required|min:6',
-        ]);
+        $this->validate();
 
         try {
             User::create([

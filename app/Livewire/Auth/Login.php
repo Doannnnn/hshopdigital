@@ -4,8 +4,10 @@ namespace App\Livewire\Auth;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 
+#[Layout('components.auth.main')]
 class Login extends Component
 {
     public $email_userName;
@@ -18,12 +20,26 @@ class Login extends Component
         return view('livewire.auth.login')->with('title', 'Đăng nhập');
     }
 
+    public function rules()
+    {
+        return [
+            'email_userName' => 'required',
+            'password' => 'required|min:6',
+        ];
+    }
+
+    public function messages()
+    {
+        return  [
+            'email_userName.required' => 'Tên đăng nhập không được để trống.',
+            'password.required' => 'Mật khẩu không được để trống.',
+            'password.min' => 'Mật khẩu ít nhất phải 6 ký tự.',
+        ];
+    }
+
     public function login()
     {
-        $this->validate([
-            'email_userName' => 'required|max:255',
-            'password' => 'required|min:6',
-        ]);
+        $this->validate();
 
         $isEmail = filter_var($this->email_userName, FILTER_VALIDATE_EMAIL);
 
@@ -47,7 +63,7 @@ class Login extends Component
             if (Auth::attempt($credentials)) {
                 return redirect()->route('admin');
             } else {
-                Session::flash('error', 'Tên người dùng hoặc mật khẩu không chính xác.');
+                Session::flash('error', 'Tên tài khoản hoặc mật khẩu không chính xác.');
             }
         }
     }

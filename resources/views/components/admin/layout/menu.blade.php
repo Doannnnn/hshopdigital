@@ -88,8 +88,13 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="#" class="menu-link">
+                    <a href="{{ route('user-list') }}" class="menu-link">
                         <div data-i18n="Perfect Scrollbar">Danh sách</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ route('add-user') }}" class="menu-link">
+                        <div data-i18n="Perfect Scrollbar">Thêm mới</div>
                     </a>
                 </li>
             </ul>
