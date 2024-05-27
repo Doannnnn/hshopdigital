@@ -22,7 +22,7 @@ class AddUser extends Component
 
     public function render()
     {
-        Session::flash('title', 'User');
+        Session::flash('title', 'Khách hàng');
 
         return view('livewire.admin.user.add-user', [
             'roles' => Role::all(),
@@ -59,7 +59,7 @@ class AddUser extends Component
         ];
     }
 
-    public function add()
+    public function addUser()
     {
         $this->validate();
 

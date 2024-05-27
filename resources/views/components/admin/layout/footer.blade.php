@@ -95,3 +95,24 @@
         });
     });
 </script>
+
+<script>
+    document.addEventListener('livewire:init', () => {
+        Livewire.on('openModal', function() {
+            var editModal = new bootstrap.Modal(document.getElementById('editModal'), {
+                backdrop: 'static',
+                keyboard: false
+            });
+            editModal.show();
+        });
+    })
+
+    document.addEventListener('livewire:init', () => {
+        Livewire.on('closeModal', function() {
+            var editModal = new bootstrap.Modal(document.getElementById('editModal'));
+            var backdrop = document.querySelector('.modal-backdrop');
+            editModal.hide();
+            backdrop.parentNode.removeChild(backdrop);
+        });
+    });
+</script>

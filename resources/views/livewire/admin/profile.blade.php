@@ -7,7 +7,7 @@
             <div class="card mb-4">
                 <h5 class="ps-5 pt-4 mb-0">Avatar</h5>
                 <!-- Account -->
-                <form id="formProfile" wire:submit.prevent="update" wire:confirm="Xác nhận cập nhập hồ sơ!">
+                <form id="formProfile" wire:submit.prevent="updateProfile" wire:confirm="Xác nhận cập nhập hồ sơ!">
                     <div class=" card-body">
                         <div class="d-flex align-items-start align-items-sm-center gap-4">
                             <div class="loading-container" wire:loading wire:target="avatar">

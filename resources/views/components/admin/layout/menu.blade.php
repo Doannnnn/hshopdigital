@@ -60,8 +60,32 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="#" class="menu-link">
+                    <a href="{{ route('product-list') }}" class="menu-link">
                         <div data-i18n="Account">Danh sách</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ route('add-product') }}" class="menu-link">
+                        <div data-i18n="Account">Thêm mới</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!-- Category -->
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                <div data-i18n="Account Settings">Danh mục</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{ route('category-list') }}" class="menu-link">
+                        <div data-i18n="Account">Danh sách</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ route('add-category') }}" class="menu-link">
+                        <div data-i18n="Account">Thêm mới</div>
                     </a>
                 </li>
             </ul>
@@ -74,13 +98,14 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="#" class="menu-link">
+                    <a href="{{ route('order-list') }}" class="menu-link">
                         <div data-i18n="Accordion">Danh sách</div>
                     </a>
                 </li>
             </ul>
         </li>
         <!-- User -->
+        @if (session('user')->role->name === 'Admin')
         <li class="menu-item">
             <a href="javascript:void(0)" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-copy"></i>
@@ -99,6 +124,7 @@
                 </li>
             </ul>
         </li>
+        @endif
     </ul>
 </aside>
 <!-- / Menu -->

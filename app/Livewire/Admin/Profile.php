@@ -33,18 +33,20 @@ class Profile extends Component
 
     public function render()
     {
-        Session::flash('title', 'Profile');
+        Session::flash('title', 'Thông tin');
 
         return view('livewire.admin.profile');
     }
 
     public function rules()
     {
+        $user = session('user');
+
         $rules = [
             'first_name' => 'required',
             'last_name' => 'required',
-            'user_name' => 'required|unique:users',
-            'email' => 'required|email|unique:users',
+            'user_name' => 'required|unique:users,user_name,' . $user->id,
+            'email' => 'required|email|unique:users,email,' . $user->id,
         ];
 
         if (!empty($this->current_password)) {
@@ -85,7 +87,7 @@ class Profile extends Component
         ];
     }
 
-    public function update()
+    public function updateProfile()
     {
         $this->validate();
 

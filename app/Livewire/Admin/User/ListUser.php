@@ -16,16 +16,16 @@ class ListUser extends Component
 {
     use WithPagination, WithoutUrlPagination;
 
+    public $id;
     public $first_name;
     public $last_name;
     public $user_name;
     public $email;
     public $role;
-    public $id;
 
     public function render()
     {
-        Session::flash('title', 'User');
+        Session::flash('title', 'Khách hàng');
 
         return view('livewire.admin.user.list-user', [
             'users' => User::whereRelation('role', 'name', '!=', 'Admin')->paginate(7),
@@ -34,25 +34,21 @@ class ListUser extends Component
         ]);
     }
 
-    public function delete($userId)
+    public function rules()
     {
-        $user = User::find($userId);
-
-        if ($user) {
-            try {
-                $user->delete();
-                Session::flash('success', 'Xoá khách hàng thành công.');
-            } catch (Exception $e) {
-                Session::flash('error', $e->getMessage());
-            }
-        } else {
-            Session::flash('error', 'Không tìm thấy khách hàng.');
-        }
+        return [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'user_name' => 'required',
+            'email' => 'required|email',
+            'role' => 'required',
+        ];
     }
 
     public function openEditModal($userId)
     {
         $user = User::findOrFail($userId);
+
         $this->id = $user->id;
         $this->first_name = $user->first_name;
         $this->last_name = $user->last_name;
@@ -65,13 +61,7 @@ class ListUser extends Component
 
     public function updateUser()
     {
-        $this->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'user_name' => 'required',
-            'email' => 'required|email',
-            'role' => 'required',
-        ]);
+        $this->validate();
 
         $user = User::findOrFail($this->id);
 
@@ -87,8 +77,27 @@ class ListUser extends Component
             $user->update($data);
 
             $this->dispatch('closeModal');
+
+            Session::flash('success', 'Cập nhập thành công!');
         } catch (Exception $e) {
             Session::flash('error', $e->getMessage());
+        }
+    }
+
+    public function deleteUser($userId)
+    {
+        $user = User::find($userId);
+
+        if ($user) {
+            try {
+                $user->delete();
+
+                Session::flash('success', 'Xoá khách hàng thành công.');
+            } catch (Exception $e) {
+                Session::flash('error', $e->getMessage());
+            }
+        } else {
+            Session::flash('error', 'Không tìm thấy khách hàng.');
         }
     }
 }

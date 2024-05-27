@@ -49,7 +49,7 @@
                                     <a class="dropdown-item" wire:click="openEditModal({{ $user->id }})">
                                         <i class="bx bx-edit-alt me-1"></i> Sửa
                                     </a>
-                                    <a class="dropdown-item" wire:click="delete({{ $user->id }})" wire:confirm="Xác nhận xoá khách hàng!">
+                                    <a class="dropdown-item" wire:click="deleteUser({{ $user->id }})" wire:confirm="Xác nhận xoá khách hàng!">
                                         <i class="bx bx-trash me-1"></i> Xoá
                                     </a>
                                 </div>
@@ -69,83 +69,62 @@
     <!-- Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true" wire:key="edit-modal">
         <div class="modal-dialog">
-            <!-- <form id="formUpdateUser" wire:submit.prevent="updateUser"> -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Chỉnh sửa thông tin khách hàng</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <form id="formUpdateUser" wire:submit.prevent="updateUser" wire:confirm="Xác nhận cập nhập!">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Chỉnh sửa thông tin khách hàng</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input class="form-control d-none" type="text" id="id" wire:model="id" />
+                        <div class="mb-3">
+                            <label class="form-label" for="first_name">Tên <span class="required">*</span></label>
+                            <input class="form-control @error('first_name') is-invalid @enderror" type="text" id="first_name" wire:model="first_name" placeholder="Nhập tên" />
+                            @error('first_name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="last_name">Họ <span class="required">*</span></label>
+                            <input class="form-control @error('last_name') is-invalid @enderror" type="text" id="last_name" wire:model="last_name" placeholder="Nhập họ" />
+                            @error('last_name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="user_name">Tên tài khoản <span class="required">*</span></label>
+                            <input class="form-control @error('user_name') is-invalid @enderror" type="text" id="user_name" wire:model="user_name" placeholder="Nhập tên tài khoản" />
+                            @error('user_name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="email">E-mail <span class="required">*</span></label>
+                            <input class="form-control @error('email') is-invalid @enderror" type="text" id="email" wire:model="email" placeholder="Nhập E-mail" />
+                            @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="role">Role <span class="required">*</span></label>
+                            <select class="select2 form-select @error('role') is-invalid @enderror" id="role" wire:model="role">
+                                @foreach($roles as $role)
+                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('role')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <input class="form-control d-none" type="text" id="id" wire:model="id" />
-                    <div class="mb-3">
-                        <label class="form-label" for="first_name">Tên <span class="required">*</span></label>
-                        <input class="form-control @error('first_name') is-invalid @enderror" type="text" id="first_name" wire:model="first_name" placeholder="Nhập tên" />
-                        @error('first_name')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="last_name">Họ <span class="required">*</span></label>
-                        <input class="form-control @error('last_name') is-invalid @enderror" type="text" id="last_name" wire:model="last_name" placeholder="Nhập họ" />
-                        @error('last_name')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="user_name">Tên tài khoản <span class="required">*</span></label>
-                        <input class="form-control @error('user_name') is-invalid @enderror" type="text" id="user_name" wire:model="user_name" placeholder="Nhập tên tài khoản" />
-                        @error('user_name')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="email">E-mail <span class="required">*</span></label>
-                        <input class="form-control @error('email') is-invalid @enderror" type="text" id="email" wire:model="email" placeholder="Nhập E-mail" />
-                        @error('email')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="role">Role <span class="required">*</span></label>
-                        <select class="select2 form-select @error('role') is-invalid @enderror" id="role" wire:model="role">
-                            @foreach($roles as $role)
-                            <option value="{{ $role->id }}">{{ $role->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('role')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary" wire:click="updateUser">Lưu thay đổi</button>
-                </div>
-            </div>
-            <!-- </form> -->
+            </form>
         </div>
     </div>
 
 </div>
 <!-- / Content -->
-
-<script>
-    document.addEventListener('livewire:init', () => {
-        Livewire.on('openModal', function() {
-            var editModal = new bootstrap.Modal(document.getElementById('editModal'), {
-                backdrop: 'static',
-                keyboard: false
-            });
-            editModal.show();
-        });
-    })
-
-    document.addEventListener('livewire:init', () => {
-        Livewire.on('closeModal', function() {
-            var editModal = new bootstrap.Modal(document.getElementById('editModal'));
-            var backdrop = document.querySelector('.modal-backdrop');
-            editModal.hide();
-            backdrop.parentNode.removeChild(backdrop);
-        });
-    });
-</script>
