@@ -22,11 +22,11 @@ class AddUser extends Component
 
     public function render()
     {
-        Session::flash('title', 'Khách hàng');
+        Session::flash('title', 'Người dùng');
 
         return view('livewire.admin.user.add-user', [
             'roles' => Role::all(),
-            'directory' => 'Thêm mới',
+            'directory' => 'Thêm người dùng',
         ]);
     }
 

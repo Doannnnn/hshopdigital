@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Auth;
 
+use App\Models\Role;
 use Livewire\Component;
 use App\Models\User;
 use Exception;
@@ -15,7 +16,6 @@ class Register extends Component
     public $user_name;
     public $email;
     public $password;
-    public $role_id = 3;
 
     public function render()
     {
@@ -55,7 +55,7 @@ class Register extends Component
                 'user_name' => $this->user_name,
                 'email' => $this->email,
                 'password' => Hash::make($this->password),
-                'role_id' => $this->role_id,
+                'role_id' => Role::where('name', 'Client')->first()->id,
             ]);
 
             Session::flash('success', 'Đăng ký thành công!');

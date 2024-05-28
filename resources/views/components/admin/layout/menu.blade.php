@@ -45,6 +45,7 @@
     </div>
 
     <ul class="menu-inner py-1">
+
         <!-- Dashboard -->
         <li class="menu-item">
             <a href="{{ route('admin') }}" class="menu-link">
@@ -52,7 +53,8 @@
                 <div data-i18n="Analytics">Dashboard</div>
             </a>
         </li>
-        <!-- Product -->
+
+        <!-- Sản phẩm -->
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
@@ -66,12 +68,13 @@
                 </li>
                 <li class="menu-item">
                     <a href="{{ route('add-product') }}" class="menu-link">
-                        <div data-i18n="Account">Thêm mới</div>
+                        <div data-i18n="Account">Thêm sản phẩm</div>
                     </a>
                 </li>
             </ul>
         </li>
-        <!-- Category -->
+
+        <!-- Danh mục -->
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
@@ -85,12 +88,13 @@
                 </li>
                 <li class="menu-item">
                     <a href="{{ route('add-category') }}" class="menu-link">
-                        <div data-i18n="Account">Thêm mới</div>
+                        <div data-i18n="Account">Thêm danh mục</div>
                     </a>
                 </li>
             </ul>
         </li>
-        <!-- Order -->
+
+        <!-- Đơn hàng -->
         <li class="menu-item">
             <a href="javascript:void(0)" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-box"></i>
@@ -104,12 +108,13 @@
                 </li>
             </ul>
         </li>
-        <!-- User -->
+
+        <!-- Người dùng -->
         @if (session('user')->role->name === 'Admin')
         <li class="menu-item">
             <a href="javascript:void(0)" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-copy"></i>
-                <div data-i18n="Extended UI">Khách hàng</div>
+                <div data-i18n="Extended UI">Người dùng</div>
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
@@ -119,12 +124,13 @@
                 </li>
                 <li class="menu-item">
                     <a href="{{ route('add-user') }}" class="menu-link">
-                        <div data-i18n="Perfect Scrollbar">Thêm mới</div>
+                        <div data-i18n="Perfect Scrollbar">Thêm người dùng</div>
                     </a>
                 </li>
             </ul>
         </li>
         @endif
+
     </ul>
 </aside>
 <!-- / Menu -->

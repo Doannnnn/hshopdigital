@@ -8,7 +8,7 @@
         <div class="col-xl">
             <div class="card mb-4">
                 <div class="card-body">
-                    <form id="formAddUser" wire:submit.prevent="addUser" wire:confirm="Xác nhận thêm mới!">
+                    <form id="formAddUser" wire:submit.prevent="addUser">
                         <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label class="form-label" for="first_name">Tên <span class="required">*</span></label>

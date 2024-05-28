@@ -33,7 +33,7 @@ class Profile extends Component
 
     public function render()
     {
-        Session::flash('title', 'Thông tin');
+        Session::flash('title', 'Thông tin tài khoản');
 
         return view('livewire.admin.profile');
     }

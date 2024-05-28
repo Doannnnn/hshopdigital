@@ -17,13 +17,20 @@ class ListCategory extends Component
 
     public $id;
     public $name;
+    public $mainCategories;
+    public $main_category;
+
+    public function mount()
+    {
+        $this->mainCategories = Category::whereNull('parent_id')->get();
+    }
 
     public function render()
     {
         Session::flash('title', 'Danh mục');
 
         return view('livewire.admin.category.list-category', [
-            'categories' => Category::paginate(6),
+            'categories' => Category::whereNotNull('parent_id')->paginate(6),
             'directory' => 'Danh sách',
         ]);
     }
@@ -31,15 +38,15 @@ class ListCategory extends Component
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name' => 'required|unique:categories,name',
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'Tên danh mục không được để trống.',
-            'name.unique' => 'Tên danh mục đã tồn tại.',
+            'name.required' => 'Tên danh mục phụ không được để trống.',
+            'name.unique' => 'Tên danh mục phụ đã tồn tại.',
         ];
     }
 
@@ -49,6 +56,7 @@ class ListCategory extends Component
 
         $this->id = $category->id;
         $this->name = $category->name;
+        $this->main_category = $category->parent_id;
 
         $this->dispatch('openModal');
     }
@@ -61,6 +69,7 @@ class ListCategory extends Component
 
         $data = [
             'name' => $this->name,
+            'parent_id' => $this->main_category,
         ];
 
         try {

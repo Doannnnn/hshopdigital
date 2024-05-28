@@ -25,7 +25,7 @@ class ListUser extends Component
 
     public function render()
     {
-        Session::flash('title', 'Khách hàng');
+        Session::flash('title', 'Người dùng');
 
         return view('livewire.admin.user.list-user', [
             'users' => User::whereRelation('role', 'name', '!=', 'Admin')->paginate(7),

@@ -9,7 +9,8 @@
                 <thead>
                     <tr>
                         <th class="text-center">ID</th>
-                        <th class="text-center">Tên</th>
+                        <th class="text-center">Tên danh mục</th>
+                        <th class="text-center">Tên danh mục chính</th>
                         <th class="text-center">Actions</th>
                     </tr>
                 </thead>
@@ -20,6 +21,13 @@
                             <span>{{ $category->id }}</span>
                         </td>
                         <td class="text-center">{{ $category->name }}</td>
+                        <td class="text-center">
+                            @if ($category->parent)
+                            {{ $category->parent->name }}
+                            @else
+                            None
+                            @endif
+                        </td>
                         <td class="text-center cursor-pointer">
                             <div class="d-flex justify-content-center">
                                 <a class="dropdown-item" wire:click="openEditModal({{ $category->id }})" style="width: 20%">
@@ -44,7 +52,7 @@
     <!-- Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true" wire:key="edit-modal">
         <div class="modal-dialog">
-            <form id="formUpdateCategory" wire:submit.prevent="updateCategory" wire:confirm="Xác nhận cập nhập!">
+            <form id="formUpdateCategory" wire:submit.prevent="updateCategory">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editModalLabel">Chỉnh sửa thông tin danh mục</h5>
@@ -53,7 +61,18 @@
                     <div class="modal-body">
                         <input class="form-control d-none" type="text" id="id" wire:model="id" />
                         <div class="mb-3">
-                            <label class="form-label" for="name">Tên danh mục<span class="required">*</span></label>
+                            <label class="form-label" for="main_category">Danh mục chính <span class="required">*</span></label>
+                            <select class="form-select" id="main_category" wire:model="main_category">
+                                @foreach ($mainCategories as $mainCategory)
+                                <option value="{{ $mainCategory->id }}">{{ $mainCategory->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('main_category')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="name">Danh mục phụ <span class="required">*</span></label>
                             <input class="form-control @error('name') is-invalid @enderror" type="text" id="name" wire:model="name" placeholder="Nhập tên" />
                             @error('name')
                             <div class="invalid-feedback">{{ $message }}</div>

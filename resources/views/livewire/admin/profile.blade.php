@@ -1,13 +1,13 @@
 <!-- Content -->
 <div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Cài đặt /</span> Thông tin tài khoản</h4>
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Thông tin /</span> Thông tin tài khoản</h4>
 
     <div class="row">
         <div class="col-md-12">
             <div class="card mb-4">
                 <h5 class="ps-5 pt-4 mb-0">Avatar</h5>
                 <!-- Account -->
-                <form id="formProfile" wire:submit.prevent="updateProfile" wire:confirm="Xác nhận cập nhập hồ sơ!">
+                <form id="formProfile" wire:submit.prevent="updateProfile">
                     <div class=" card-body">
                         <div class="d-flex align-items-start align-items-sm-center gap-4">
                             <div class="loading-container" wire:loading wire:target="avatar">
