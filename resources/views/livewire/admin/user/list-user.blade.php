@@ -67,9 +67,9 @@
     <!--/ Basic Bootstrap Table -->
 
     <!-- Modal -->
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true" wire:key="edit-modal">
+    <div wire:ignore.self class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true" wire:key="edit-modal">
         <div class="modal-dialog">
-            <form id="formUpdateUser" wire:submit.prevent="updateUser" wire:confirm="Xác nhận cập nhập!">
+            <form id="formUpdateUser" wire:submit.prevent="updateUser">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editModalLabel">Chỉnh sửa thông tin khách hàng</h5>

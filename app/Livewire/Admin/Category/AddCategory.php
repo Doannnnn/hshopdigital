@@ -11,18 +11,18 @@ use Livewire\Component;
 #[Layout('components.admin.main')]
 class AddCategory extends Component
 {
-    public $main_category;
-    public $main_category_select;
-    public $sub_category;
-    public $mainCategories;
+    public $category;
+    public $select_category;
+    public $product_category;
+    public $categories;
     public $selected_value;
-    public $category_select;
+    public $category_type;
 
     public function mount()
     {
-        $this->mainCategories = Category::whereNull('parent_id')->get();
-        $this->main_category_select = $this->mainCategories->first()->id ?? '';
-        $this->selected_value = 'main_category';
+        $this->categories = Category::whereNull('parent_id')->get();
+        $this->select_category = $this->categories->first()->id ?? '';
+        $this->selected_value = 'category';
     }
 
     public function render()
@@ -38,12 +38,12 @@ class AddCategory extends Component
     {
         $rules = [];
 
-        if ($this->selected_value === 'main_category' || $this->selected_value === 'both') {
-            $rules['main_category'] = 'required|unique:categories,name';
+        if ($this->selected_value === 'category' || $this->selected_value === 'both') {
+            $rules['category'] = 'required|unique:categories,name';
         }
 
-        if ($this->selected_value === 'sub_category' || $this->selected_value === 'both') {
-            $rules['sub_category'] = 'required|unique:categories,name';
+        if ($this->selected_value === 'product_category' || $this->selected_value === 'both') {
+            $rules['product_category'] = 'required|unique:categories,name';
         }
 
         return $rules;
@@ -52,16 +52,16 @@ class AddCategory extends Component
     public function messages()
     {
         return [
-            'main_category.required' => 'Tên danh mục chính không được để trống.',
-            'main_category.unique' => 'Tên danh mục chính đã tồn tại.',
-            'sub_category.required' => 'Tên danh mục phụ không được để trống.',
-            'sub_category.unique' => 'Tên danh mục phụ đã tồn tại.',
+            'category.required' => 'Tên danh mục chính không được để trống.',
+            'category.unique' => 'Tên danh mục chính đã tồn tại.',
+            'product_category.required' => 'Tên danh mục phụ không được để trống.',
+            'product_category.unique' => 'Tên danh mục phụ đã tồn tại.',
         ];
     }
 
     public function updateCategorySelect()
     {
-        $this->selected_value = $this->category_select;
+        $this->selected_value = $this->category_type;
     }
 
     public function addCategory()
@@ -69,18 +69,18 @@ class AddCategory extends Component
         $this->validate();
 
         try {
-            if ($this->selected_value === 'main_category') {
+            if ($this->selected_value === 'category') {
                 Category::create([
-                    'name' => $this->main_category,
+                    'name' => $this->category,
                 ]);
 
                 $message = 'Thêm danh mục chính thành công';
             }
 
-            if ($this->selected_value === 'sub_category') {
-                $mainCategory = Category::firstOrCreate(['id' => $this->main_category_select]);
+            if ($this->selected_value === 'product_category') {
+                $mainCategory = Category::firstOrCreate(['id' => $this->select_category]);
                 Category::create([
-                    'name' => $this->sub_category,
+                    'name' => $this->product_category,
                     'parent_id' => $mainCategory->id,
                 ]);
 
@@ -89,11 +89,11 @@ class AddCategory extends Component
 
             if ($this->selected_value === 'both') {
                 $mainCategory = Category::create([
-                    'name' => $this->main_category,
+                    'name' => $this->category,
                 ]);
 
                 Category::create([
-                    'name' => $this->sub_category,
+                    'name' => $this->product_category,
                     'parent_id' => $mainCategory->id,
                 ]);
 

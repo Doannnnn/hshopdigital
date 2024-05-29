@@ -12,45 +12,45 @@
                         <div>
                             <div class="mb-3 col-md-6">
                                 <label class="form-label" for="category_type">Chọn loại danh mục <span class="required">*</span></label>
-                                <select class="form-select" id="category_type" wire:model="category_select" wire:change="updateCategorySelect">
-                                    <option value="main_category">Thêm danh mục chính</option>
-                                    <option value="sub_category">Thêm danh mục phụ</option>
+                                <select class="form-select" id="category_type" wire:model="category_type" wire:change="updateCategorySelect">
+                                    <option value="category">Thêm danh mục</option>
+                                    <option value="product_category">Thêm danh mục sản phẩm</option>
                                     <option value="both">Thêm cả 2 danh mục</option>
                                 </select>
                             </div>
 
-                            <!-- Danh mục chính -->
-                            @if ($selected_value != 'sub_category')
+                            <!-- Danh mục -->
+                            @if ($selected_value != 'product_category')
                             <div class="mb-3 col-md-6">
-                                <label class="form-label" for="main_category">Danh mục chính <span class="required">*</span></label>
-                                <input class="form-control @error('main_category') is-invalid @enderror" type="text" id="main_category" wire:model="main_category" placeholder="Nhập tên danh mục chính" />
-                                @error('main_category')
+                                <label class="form-label" for="category">Danh mục <span class="required">*</span></label>
+                                <input class="form-control @error('category') is-invalid @enderror" type="text" id="category" wire:model="category" placeholder="Nhập tên danh mục chính" />
+                                @error('category')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             @endif
 
-                            <!-- Select danh mục chính -->
-                            @if ($selected_value == 'sub_category')
+                            <!-- Select danh mục -->
+                            @if ($selected_value == 'product_category')
                             <div class="mb-3 col-md-6">
-                                <label class="form-label" for="main_category_select">Danh mục chính <span class="required">*</span></label>
-                                <select class="form-select" id="main_category_select" wire:model="main_category_select">
-                                    @foreach ($mainCategories as $mainCategory)
-                                    <option value="{{ $mainCategory->id }}">{{ $mainCategory->name }}</option>
+                                <label class="form-label" for="select_category">Danh mục <span class="required">*</span></label>
+                                <select class="form-select" id="select_category" wire:model="select_category">
+                                    @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
-                                @error('main_category_select')
+                                @error('select_category')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             @endif
 
-                            <!-- Danh mục phụ -->
-                            @if ($selected_value != 'main_category')
+                            <!-- Danh mục sản phẩm -->
+                            @if ($selected_value != 'category')
                             <div class="mb-3 col-md-6">
-                                <label class="form-label" for="sub_category">Danh mục phụ <span class="required">*</span></label>
-                                <input class="form-control @error('sub_category') is-invalid @enderror" type="text" id="sub_category" wire:model="sub_category" placeholder="Nhập tên danh mục phụ" />
-                                @error('sub_category')
+                                <label class="form-label" for="product_category">Danh mục sản phẩm <span class="required">*</span></label>
+                                <input class="form-control @error('product_category') is-invalid @enderror" type="text" id="product_category" wire:model="product_category" placeholder="Nhập tên danh mục phụ" />
+                                @error('product_category')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>

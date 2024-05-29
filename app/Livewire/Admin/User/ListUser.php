@@ -45,6 +45,20 @@ class ListUser extends Component
         ];
     }
 
+    public function messages()
+    {
+        return [
+            'first_name.required' => 'Tên không được để trống.',
+            'last_name.required' => 'Họ không được để trống.',
+            'user_name.required' => 'Tên người dùng không được để trống.',
+            'user_name.unique' => 'Tên tài khoản đã tồn tại.',
+            'email.required' => 'Email không được để trống.',
+            'email.email' => 'Địa chỉ E-mail không hợp lệ.',
+            'role.required' => 'Chọn role.',
+            'role.exists' => 'Role không hợp lệ.',
+        ];
+    }
+
     public function openEditModal($userId)
     {
         $user = User::findOrFail($userId);

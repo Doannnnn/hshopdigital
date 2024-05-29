@@ -9,13 +9,13 @@
                 <thead>
                     <tr>
                         <th class="text-center">ID</th>
-                        <th class="text-center">Tên danh mục</th>
-                        <th class="text-center">Tên danh mục chính</th>
+                        <th class="text-center">Danh mục sản phẩm</th>
+                        <th class="text-center">Danh mục</th>
                         <th class="text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    @foreach($categories as $category)
+                    @foreach($product_categories as $category)
                     <tr>
                         <td class="text-center">
                             <span>{{ $category->id }}</span>
@@ -43,14 +43,14 @@
                 </tbody>
             </table>
             <div class="d-flex justify-content-center mt-3">
-                {{ $categories->links() }}
+                {{ $product_categories->links() }}
             </div>
         </div>
     </div>
     <!--/ Basic Bootstrap Table -->
 
     <!-- Modal -->
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true" wire:key="edit-modal">
+    <div wire:ignore.self class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true" wire:key="edit-modal">
         <div class="modal-dialog">
             <form id="formUpdateCategory" wire:submit.prevent="updateCategory">
                 <div class="modal-content">
@@ -61,20 +61,20 @@
                     <div class="modal-body">
                         <input class="form-control d-none" type="text" id="id" wire:model="id" />
                         <div class="mb-3">
-                            <label class="form-label" for="main_category">Danh mục chính <span class="required">*</span></label>
-                            <select class="form-select" id="main_category" wire:model="main_category">
-                                @foreach ($mainCategories as $mainCategory)
-                                <option value="{{ $mainCategory->id }}">{{ $mainCategory->name }}</option>
+                            <label class="form-label" for="category">Danh mục <span class="required">*</span></label>
+                            <select class="form-select" id="category" wire:model="category">
+                                @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
-                            @error('main_category')
+                            @error('category')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="name">Danh mục phụ <span class="required">*</span></label>
-                            <input class="form-control @error('name') is-invalid @enderror" type="text" id="name" wire:model="name" placeholder="Nhập tên" />
-                            @error('name')
+                            <label class="form-label" for="product_category">Danh mục sản phẩm <span class="required">*</span></label>
+                            <input class="form-control @error('product_category') is-invalid @enderror" type="text" id="product_category" wire:model="product_category" placeholder="Nhập tên" />
+                            @error('product_category')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

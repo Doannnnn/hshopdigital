@@ -99,20 +99,19 @@
 <script>
     document.addEventListener('livewire:init', () => {
         Livewire.on('openModal', function() {
-            var editModal = new bootstrap.Modal(document.getElementById('editModal'), {
-                backdrop: 'static',
-                keyboard: false
-            });
+            var editModal = new bootstrap.Modal(document.getElementById('editModal'));
             editModal.show();
         });
-    })
 
-    document.addEventListener('livewire:init', () => {
         Livewire.on('closeModal', function() {
             var editModal = new bootstrap.Modal(document.getElementById('editModal'));
             var backdrop = document.querySelector('.modal-backdrop');
+            var modalElement = document.getElementById('editModal');
             editModal.hide();
             backdrop.parentNode.removeChild(backdrop);
+            modalElement.classList.remove('show');
+            modalElement.removeAttribute('style');
         });
-    });
+
+    })
 </script>

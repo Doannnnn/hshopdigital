@@ -16,21 +16,16 @@ class ListCategory extends Component
     use WithPagination, WithoutUrlPagination;
 
     public $id;
-    public $name;
-    public $mainCategories;
-    public $main_category;
-
-    public function mount()
-    {
-        $this->mainCategories = Category::whereNull('parent_id')->get();
-    }
+    public $product_category;
+    public $category;
 
     public function render()
     {
         Session::flash('title', 'Danh mục');
 
         return view('livewire.admin.category.list-category', [
-            'categories' => Category::whereNotNull('parent_id')->paginate(6),
+            'categories' => Category::whereNull('parent_id')->get(),
+            'product_categories' => Category::whereNotNull('parent_id')->paginate(6),
             'directory' => 'Danh sách',
         ]);
     }
@@ -38,15 +33,15 @@ class ListCategory extends Component
     public function rules()
     {
         return [
-            'name' => 'required|unique:categories,name',
+            'product_category' => 'required|unique:categories,name',
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'Tên danh mục phụ không được để trống.',
-            'name.unique' => 'Tên danh mục phụ đã tồn tại.',
+            'product_category.required' => 'Danh mục sản phẩm không được để trống.',
+            'product_category.unique' => 'Danh mục sản phẩm đã tồn tại.',
         ];
     }
 
@@ -55,8 +50,8 @@ class ListCategory extends Component
         $category = Category::findOrFail($categoryId);
 
         $this->id = $category->id;
-        $this->name = $category->name;
-        $this->main_category = $category->parent_id;
+        $this->product_category = $category->name;
+        $this->category = $category->parent_id;
 
         $this->dispatch('openModal');
     }
@@ -68,8 +63,8 @@ class ListCategory extends Component
         $category = Category::findOrFail($this->id);
 
         $data = [
-            'name' => $this->name,
-            'parent_id' => $this->main_category,
+            'name' => $this->product_category,
+            'parent_id' => $this->category,
         ];
 
         try {

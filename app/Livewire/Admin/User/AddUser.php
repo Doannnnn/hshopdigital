@@ -54,7 +54,7 @@ class AddUser extends Component
             'email.unique' => 'E-mail đã tồn tại.',
             'password.required' => 'Mật khẩu hiện tại không được để trống.',
             'password.min' => 'Mật khẩu ít nhất phải 6 ký tự.',
-            'role.required' => 'Bắt buộc chọn role.',
+            'role.required' => 'Chọn role.',
             'role.exists' => 'Role không hợp lệ.',
         ];
     }
