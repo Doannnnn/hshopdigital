@@ -58,13 +58,12 @@ class Register extends Component
                 'role_id' => Role::where('name', 'Client')->first()->id,
             ]);
 
-            Session::flash('success', 'Đăng ký thành công!');
+            $this->dispatch('showToast', ['type' => 'success', 'message' => 'Đăng ký thành công!']);
 
             return redirect()->route('login');
         } catch (Exception $e) {
-            Session::flash('error', $e->getMessage());
 
-            return redirect()->back();
+            $this->dispatch('showToast', ['type' => 'error', 'message' => $e->getMessage('Đăng ký thất bại!')]);
         }
     }
 }

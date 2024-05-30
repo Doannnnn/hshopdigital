@@ -11,7 +11,7 @@
                     <form id="formAddCategory" wire:submit.prevent="addCategory">
                         <div>
                             <div class="mb-3 col-md-6">
-                                <label class="form-label" for="category_type">Chọn loại danh mục <span class="required">*</span></label>
+                                <label class="form-label" for="category_type">Chọn danh mục muốn thêm <span class="required">*</span></label>
                                 <select class="form-select" id="category_type" wire:model="category_type" wire:change="updateCategorySelect">
                                     <option value="category">Thêm danh mục</option>
                                     <option value="product_category">Thêm danh mục sản phẩm</option>

@@ -80,7 +80,7 @@
                                 @foreach($images as $index => $image)
                                 <div class="position-relative">
                                     <img src="{{ asset($image->url) }}" alt="image" class="d-block rounded" height="100" width="100" />
-                                    <button type="button" wire:click="removeImage({{ $index }})" class="btn btn-xs btn-danger position-absolute top-0 start-100 translate-middle">
+                                    <button type="button" wire:click="removeImage({{ $index }}, 'images')" class="btn btn-xs btn-danger position-absolute top-0 start-100 translate-middle">
                                         <i class='bx bx-x'></i>
                                     </button>
                                 </div>
@@ -91,7 +91,7 @@
                                 @foreach($uploadedImages as $index => $image)
                                 <div class="position-relative">
                                     <img src="{{ $image->temporaryUrl() }}" alt="image" class="d-block rounded" height="100" width="100" />
-                                    <button type="button" wire:click="removeImage({{ $index }})" class="btn btn-xs btn-danger position-absolute top-0 start-100 translate-middle">
+                                    <button type="button" wire:click="removeImage({{ $index }}, 'uploadedImages')" class="btn btn-xs btn-danger position-absolute top-0 start-100 translate-middle">
                                         <i class='bx bx-x'></i>
                                     </button>
                                 </div>

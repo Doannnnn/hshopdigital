@@ -74,7 +74,7 @@ class AddCategory extends Component
                     'name' => $this->category,
                 ]);
 
-                $message = 'Thêm danh mục chính thành công';
+                $message = 'Thêm danh mục thành công!';
             }
 
             if ($this->selected_value === 'product_category') {
@@ -84,7 +84,7 @@ class AddCategory extends Component
                     'parent_id' => $mainCategory->id,
                 ]);
 
-                $message = 'Thêm danh mục phụ thành công';
+                $message = 'Thêm danh mục sản phẩm thành công!';
             }
 
             if ($this->selected_value === 'both') {
@@ -97,14 +97,15 @@ class AddCategory extends Component
                     'parent_id' => $mainCategory->id,
                 ]);
 
-                $message = 'Thêm 2 danh mục thành công';
+                $message = 'Thêm 2 danh mục thành công!';
             }
 
-            session::flash('success', $message);
+            Session::flash('success', $message);
 
             return redirect()->route('category-list');
         } catch (\Exception $e) {
-            session::flash('error', $e->getMessage());
+
+            $this->dispatch('showToast', ['type' => 'error', 'message' => $e->getMessage('Thêm danh mục thất bại!')]);
         }
     }
 }

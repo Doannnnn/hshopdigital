@@ -52,7 +52,8 @@ class Login extends Component
             if (Auth::attempt($credentials)) {
                 return redirect()->route('admin');
             } else {
-                Session::flash('error', 'Email hoặc mật khẩu không chính xác.');
+
+                $this->dispatch('showToast', ['type' => 'error', 'message' => 'E-mail hoặc mật khẩu không chính xác!']);
             }
         } else {
             $credentials = [
@@ -61,9 +62,11 @@ class Login extends Component
             ];
 
             if (Auth::attempt($credentials)) {
+
                 return redirect()->route('admin');
             } else {
-                Session::flash('error', 'Tên tài khoản hoặc mật khẩu không chính xác.');
+
+                $this->dispatch('showToast', ['type' => 'error', 'message' => 'Tên tài khoản hoặc mật khẩu không chính xác!']);
             }
         }
     }

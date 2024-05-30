@@ -104,10 +104,12 @@ class AddProduct extends Component
                 ]);
             }
 
-            Session::flash('success', 'Thêm mới thành công!');
+            Session::flash('success', 'Thêm sản phẩm thành công!');
+
             return redirect()->route('product-list');
         } catch (Exception $e) {
-            Session::flash('error', $e->getMessage());
+
+            $this->dispatch('showToast', ['type' => 'error', 'message' => $e->getMessage('Thêm sản phẩm thất bại!')]);
         }
     }
 }

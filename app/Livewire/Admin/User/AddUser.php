@@ -73,11 +73,12 @@ class AddUser extends Component
                 'role_id' => $this->role,
             ]);
 
-            Session::flash('success', 'Thêm mới thành công!');
+            Session::flash('success', 'Thêm người dùng thành công!');
 
             redirect()->route('user-list');
         } catch (Exception $e) {
-            Session::flash('error', $e->getMessage());
+
+            $this->dispatch('showToast', ['type' => 'error', 'message' => $e->getMessage('Thêm người dùng thất bại!')]);
         }
     }
 }

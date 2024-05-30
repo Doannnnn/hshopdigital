@@ -1,11 +1,11 @@
 <!-- Content -->
 <div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Thông tin /</span> Thông tin tài khoản</h4>
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">{{ session('title') }} /</span> {{ $directory }}</h4>
 
     <div class="row">
         <div class="col-md-12">
             <div class="card mb-4">
-                <h5 class="ps-5 pt-4 mb-0">Avatar</h5>
+                <h5 class="ps-4 pt-4 mb-0">Ảnh đại diện</h5>
                 <!-- Account -->
                 <form id="formProfile" wire:submit.prevent="updateProfile">
                     <div class=" card-body">

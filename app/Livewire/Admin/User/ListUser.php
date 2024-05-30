@@ -92,9 +92,10 @@ class ListUser extends Component
 
             $this->dispatch('closeModal');
 
-            Session::flash('success', 'Cập nhập thành công!');
+            $this->dispatch('showToast', ['type' => 'success', 'message' => 'Cập nhập người dùng thành công!']);
         } catch (Exception $e) {
-            Session::flash('error', $e->getMessage());
+
+            $this->dispatch('showToast', ['type' => 'error', 'message' => $e->getMessage('Cập nhập người dùng thất bại!')]);
         }
     }
 
@@ -106,12 +107,14 @@ class ListUser extends Component
             try {
                 $user->delete();
 
-                Session::flash('success', 'Xoá khách hàng thành công.');
+                $this->dispatch('showToast', ['type' => 'success', 'message' => 'Xoá người dùng thành công!']);
             } catch (Exception $e) {
-                Session::flash('error', $e->getMessage());
+
+                $this->dispatch('showToast', ['type' => 'error', 'message' => $e->getMessage('Xoá người dùng thất bại!')]);
             }
         } else {
-            Session::flash('error', 'Không tìm thấy khách hàng.');
+
+            $this->dispatch('showToast', ['type' => 'error', 'message' => 'Không tìm thấy khách hàng!']);
         }
     }
 }

@@ -49,7 +49,7 @@
                                     <a class="dropdown-item" wire:click="openEditModal({{ $user->id }})">
                                         <i class="bx bx-edit-alt me-1"></i> Sửa
                                     </a>
-                                    <a class="dropdown-item" wire:click="deleteUser({{ $user->id }})" wire:confirm="Xác nhận xoá khách hàng!">
+                                    <a class="dropdown-item" wire:click="deleteUser({{ $user->id }})" wire:confirm="Xác nhận xoá người dùng?">
                                         <i class="bx bx-trash me-1"></i> Xoá
                                     </a>
                                 </div>

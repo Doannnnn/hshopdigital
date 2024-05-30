@@ -18,6 +18,12 @@ class ListCategory extends Component
     public $id;
     public $product_category;
     public $category;
+    public $category_type;
+
+    public function mount()
+    {
+        $this->category_type = 'child';
+    }
 
     public function render()
     {
@@ -25,7 +31,8 @@ class ListCategory extends Component
 
         return view('livewire.admin.category.list-category', [
             'categories' => Category::whereNull('parent_id')->get(),
-            'product_categories' => Category::whereNotNull('parent_id')->paginate(6),
+            'listCategory' => Category::whereNull('parent_id')->paginate(5),
+            'product_categories' => Category::whereNotNull('parent_id')->paginate(5),
             'directory' => 'Danh sách',
         ]);
     }
@@ -33,7 +40,8 @@ class ListCategory extends Component
     public function rules()
     {
         return [
-            'product_category' => 'required|unique:categories,name',
+            'product_category' => 'required',
+            'category' => 'required',
         ];
     }
 
@@ -41,17 +49,29 @@ class ListCategory extends Component
     {
         return [
             'product_category.required' => 'Danh mục sản phẩm không được để trống.',
-            'product_category.unique' => 'Danh mục sản phẩm đã tồn tại.',
+            'category.required' => 'Danh mục không được để trống.',
         ];
     }
 
-    public function openEditModal($categoryId)
+    public function updateSelectType()
+    {
+        $this->category_type = $this->category_type;
+    }
+
+    public function openEditModal($categoryId, $source)
     {
         $category = Category::findOrFail($categoryId);
 
-        $this->id = $category->id;
-        $this->product_category = $category->name;
-        $this->category = $category->parent_id;
+        if ($source === 'product_category') {
+            $this->id = $category->id;
+            $this->product_category = $category->name;
+            $this->category = $category->parent_id;
+        }
+
+        if ($source === 'category') {
+            $this->id = $category->id;
+            $this->category = $category->name;
+        }
 
         $this->dispatch('openModal');
     }
@@ -72,9 +92,10 @@ class ListCategory extends Component
 
             $this->dispatch('closeModal');
 
-            Session::flash('success', 'Cập nhập thành công!');
+            $this->dispatch('showToast', ['type' => 'success', 'message' => 'Cập nhập danh mục thành công!']);
         } catch (Exception $e) {
-            Session::flash('error', $e->getMessage());
+
+            $this->dispatch('showToast', ['type' => 'error', 'message' => $e->getMessage('Cập nhập danh mục thất bại!')]);
         }
     }
 
@@ -86,12 +107,14 @@ class ListCategory extends Component
             try {
                 $category->delete();
 
-                Session::flash('success', 'Xoá danh mục thành công.');
+                $this->dispatch('showToast', ['type' => 'success', 'message' => 'Xoá danh mục thành công!']);
             } catch (Exception $e) {
-                Session::flash('error', $e->getMessage());
+
+                $this->dispatch('showToast', ['type' => 'error', 'message' => $e->getMessage('Xoá danh mục thất bại!')]);
             }
         } else {
-            Session::flash('error', 'Không tìm thấy danh mục.');
+
+            $this->dispatch('showToast', ['type' => 'error', 'message' => 'Không tìm thấy danh mục!']);
         }
     }
 }

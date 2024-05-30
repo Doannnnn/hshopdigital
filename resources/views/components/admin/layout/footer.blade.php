@@ -4,7 +4,6 @@
 <script src="/assets/vendor/libs/popper/popper.js"></script>
 <script src="/assets/vendor/js/bootstrap.js"></script>
 <script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-
 <script src="/assets/vendor/js/menu.js"></script>
 <!-- endbuild -->
 
@@ -21,50 +20,6 @@
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<script>
-    const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 5000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-        }
-    });
-
-    const toastSuccess = "{{ Session::get('success') }}";
-    if (toastSuccess.trim() !== "") {
-        Toast.fire({
-            icon: "success",
-            title: toastSuccess,
-        });
-    }
-
-    const toastError = "{{ Session::get('error') }}";
-    if (toastError.trim() !== "") {
-        Toast.fire({
-            icon: "error",
-            title: toastError,
-        });
-    }
-
-    function handleDelete(id) {
-        Swal.fire({
-            title: 'Confirm remove user',
-            text: 'Are you sure to remove this user?',
-            showCancelButton: true,
-            confirmButtonText: 'Confirm',
-            cancelButtonText: 'Cancel',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = "" + id;
-            }
-        });
-    }
-</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -97,6 +52,26 @@
 </script>
 
 <script>
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 5000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
+
+    const toastSuccess = "{{ Session::get('success') }}";
+    if (toastSuccess.trim() !== "") {
+        Toast.fire({
+            icon: "success",
+            title: toastSuccess,
+        });
+    }
+
     document.addEventListener('livewire:init', () => {
         Livewire.on('openModal', function() {
             var editModal = new bootstrap.Modal(document.getElementById('editModal'));
@@ -111,6 +86,15 @@
             backdrop.parentNode.removeChild(backdrop);
             modalElement.classList.remove('show');
             modalElement.removeAttribute('style');
+        });
+
+        Livewire.on('showToast', function(data) {
+            var toastData = data[0];
+
+            Toast.fire({
+                icon: toastData.type,
+                title: toastData.message,
+            });
         });
 
     })

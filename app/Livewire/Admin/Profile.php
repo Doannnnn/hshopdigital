@@ -35,7 +35,9 @@ class Profile extends Component
     {
         Session::flash('title', 'Thông tin tài khoản');
 
-        return view('livewire.admin.profile');
+        return view('livewire.admin.profile',  [
+            'directory' => 'Cập nhật',
+        ]);
     }
 
     public function rules()
@@ -119,13 +121,12 @@ class Profile extends Component
 
             session(['user' => $user]);
 
-            Session::flash('success', 'Cập nhật thành công.');
+            $this->dispatch('showToast', ['type' => 'success', 'message' => 'Cập nhật thông tin thành công!']);
 
-            redirect()->route('profile');
+            $this->reset(['current_password', 'new_password', 'confirm_new_password']);
         } catch (Exception $e) {
-            Session::flash('error', $e->getMessage());
 
-            return redirect()->back();
+            $this->dispatch('showToast', ['type' => 'error', 'message' => $e->getMessage('Cập nhập thông tin thất bại!')]);
         }
     }
 }

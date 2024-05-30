@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Product;
 
 use App\Models\Category;
+use App\Models\Image;
 use App\Models\Product;
 use Exception;
 use Illuminate\Support\Facades\Session;
@@ -60,22 +61,35 @@ class ListProduct extends Component
     {
         $product = Product::findOrFail($productId);
 
+        // Gán dữ liệu sản phẩm modal
         $this->id = $product->id;
         $this->name = $product->name;
         $this->price = $product->price;
         $this->description = $product->description;
         $this->category = $product->category->id;
         $this->images = $product->images;
+        $this->uploadedImages = [];
 
-        $this->dispatch('openModal');
+        $this->dispatch('openModal'); // mở modal
     }
 
-    public function removeImage($index)
+    public function removeImage($index, $source)
     {
-        if ($this->images->offsetExists($index)) {
-            unset($this->images[$index]);
+        // Xoá hình ảnh của sản phẩm
+        if ($source === 'images') {
+            if ($this->images->offsetExists($index)) {
+                unset($this->images[$index]);
+            }
+        }
+
+        // Xoá hình ảnh thêm mới
+        if ($source === 'uploadedImages') {
+            if (isset($this->uploadedImages[$index])) {
+                unset($this->uploadedImages[$index]);
+            }
         }
     }
+
 
     public function updateProduct()
     {
@@ -91,21 +105,50 @@ class ListProduct extends Component
         ];
 
         try {
-            $product->update($data);
+            $product->update($data); // cập nhập sản phẩm
 
-            if (empty($this->uploadedImages) && !empty($this->images)) {
-                foreach ($this->images as $index => $image) {
-                    if (!file_exists(public_path($image))) {
-                        unset($this->images[$index]);
-                    }
+            if (count($this->images) != $product->images->count()) {
+                // Kiểm tra hình ảnh bị xóa
+                $existingImages = $product->images;
+                $remainingImages = collect($this->images);
+
+                // Tìm hình ảnh đã bị loại bỏ
+                $removedImages = $existingImages->filter(function ($image) use ($remainingImages) {
+                    return !$remainingImages->contains('id', $image->id);
+                });
+
+                // Xóa các hình ảnh bị loại bỏ khỏi cơ sở dữ liệu
+                foreach ($removedImages as $removedImage) {
+                    $removedImage->delete();
                 }
             }
 
-            $this->dispatch('closeModal');
+            if (!empty($this->uploadedImages)) {
+                $imagesPaths = [];
 
-            Session::flash('success', 'Cập nhập thành công!');
+                // Thêm hình ảnh mới vào public/storage/products
+                foreach ($this->uploadedImages as $image) {
+                    $originalFilename = $image->getClientOriginalName();
+                    $imagePath = $image->storeAs('products', $originalFilename, 'public');
+                    $imagesPaths[] = 'storage/' . $imagePath;
+                }
+
+                // Thêm đường dẫn hình ảnh mới vào database
+                foreach ($imagesPaths as $path) {
+                    Image::create([
+                        'url' => $path,
+                        'product_id' => $product->id,
+                    ]);
+                }
+            }
+
+            $this->dispatch('closeModal'); // đóng modal
+
+            $this->dispatch('showToast', ['type' => 'success', 'message' => 'Cập nhật sản phẩm thành công!']);
+        
         } catch (Exception $e) {
-            Session::flash('error', $e->getMessage());
+
+            $this->dispatch('showToast', ['type' => 'error', 'message' => $e->getMessage('Cập nhật sản phẩm thất bại!')]);
         }
     }
 
@@ -117,12 +160,14 @@ class ListProduct extends Component
             try {
                 $product->delete();
 
-                Session::flash('success', 'Xoá sản phẩm thành công.');
+                $this->dispatch('showToast', ['type' => 'success', 'message' => 'Xoá sản phẩm thành công!']);
             } catch (Exception $e) {
-                Session::flash('error', $e->getMessage());
+
+                $this->dispatch('showToast', ['type' => 'error', 'message' => $e->getMessage('Xoá sản phẩm thất bại!')]);
             }
         } else {
-            Session::flash('error', 'Không tìm thấy sản phẩm.');
+
+            $this->dispatch('showToast', ['type' => 'error', 'message' => 'Không tìm thấy sản phẩm!']);
         }
     }
 }
