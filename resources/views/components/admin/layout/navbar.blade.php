@@ -36,8 +36,7 @@
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
-                                    <span class="fw-semibold d-block">
-                                        {{ session('user')->first_name ? session('user')->first_name . ' ' . session('user')->last_name : session('user')->user_name }}</span>
+                                    <span class="fw-semibold d-block"> {{ session('user')->full_name }}</span>
                                     <small class="text-muted">{{ session('user')->role->name }}</small>
                                 </div>
                             </div>

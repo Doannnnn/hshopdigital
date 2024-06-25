@@ -10,7 +10,7 @@ use Livewire\Component;
 #[Layout('components.auth.main')]
 class Login extends Component
 {
-    public $email_userName;
+    public $user_name;
     public $password;
 
     public function render()
@@ -23,7 +23,7 @@ class Login extends Component
     public function rules()
     {
         return [
-            'email_userName' => 'required',
+            'user_name' => 'required',
             'password' => 'required|min:6',
         ];
     }
@@ -31,7 +31,7 @@ class Login extends Component
     public function messages()
     {
         return  [
-            'email_userName.required' => 'Tên đăng nhập không được để trống.',
+            'user_name.required' => 'Tên đăng nhập không được để trống.',
             'password.required' => 'Mật khẩu không được để trống.',
             'password.min' => 'Mật khẩu ít nhất phải 6 ký tự.',
         ];
@@ -41,11 +41,11 @@ class Login extends Component
     {
         $this->validate();
 
-        $isEmail = filter_var($this->email_userName, FILTER_VALIDATE_EMAIL);
+        $isEmail = filter_var($this->user_name, FILTER_VALIDATE_EMAIL);
 
         if ($isEmail) {
             $credentials = [
-                'email' => $this->email_userName,
+                'email' => $this->user_name,
                 'password' => $this->password,
             ];
 
@@ -57,7 +57,7 @@ class Login extends Component
             }
         } else {
             $credentials = [
-                'user_name' => $this->email_userName,
+                'phone' => $this->user_name,
                 'password' => $this->password,
             ];
 
@@ -66,7 +66,7 @@ class Login extends Component
                 return redirect()->route('admin');
             } else {
 
-                $this->dispatch('showToast', ['type' => 'error', 'message' => 'Tên tài khoản hoặc mật khẩu không chính xác!']);
+                $this->dispatch('showToast', ['type' => 'error', 'message' => 'Số điện thoại hoặc mật khẩu không chính xác!']);
             }
         }
     }

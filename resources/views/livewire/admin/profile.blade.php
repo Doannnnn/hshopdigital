@@ -36,23 +36,16 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="mb-3">
-                                    <label class="form-label" for="first_name">Tên <span class="required">*</span></label>
-                                    <input class="form-control @error('first_name') is-invalid @enderror" type="text" id="first_name" wire:model="first_name" />
-                                    @error('first_name')
+                                    <label class="form-label" for="full_name">Họ và Tên <span class="required">*</span></label>
+                                    <input class="form-control @error('full_name') is-invalid @enderror" type="text" id="full_name" wire:model="full_name" />
+                                    @error('full_name')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label" for="last_name">Họ <span class="required">*</span></label>
-                                    <input class="form-control @error('last_name') is-invalid @enderror" type="text" id="last_name" wire:model="last_name" />
-                                    @error('last_name')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label" for="user_name">Tên tài khoản <span class="required">*</span></label>
-                                    <input class="form-control @error('user_name') is-invalid @enderror" type="text" id="user_name" wire:model="user_name" />
-                                    @error('user_name')
+                                    <label class="form-label" for="phone">Số điện thoại <span class="required">*</span></label>
+                                    <input class="form-control @error('phone') is-invalid @enderror" type="text" id="phone" wire:model="phone" />
+                                    @error('phone')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>

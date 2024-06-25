@@ -14,10 +14,9 @@ class Profile extends Component
 {
     use WithFileUploads;
 
-    public $first_name;
-    public $last_name;
-    public $user_name;
+    public $full_name;
     public $email;
+    public $phone;
     public $current_password;
     public $new_password;
     public $confirm_new_password;
@@ -25,10 +24,9 @@ class Profile extends Component
 
     public function mount()
     {
-        $this->first_name = session('user')->first_name;
-        $this->last_name = session('user')->last_name;
+        $this->full_name = session('user')->full_name;
+        $this->phone = session('user')->phone;
         $this->email = session('user')->email;
-        $this->user_name = session('user')->user_name;
     }
 
     public function render()
@@ -45,9 +43,8 @@ class Profile extends Component
         $user = session('user');
 
         $rules = [
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'user_name' => 'required|unique:users,user_name,' . $user->id,
+            'full_name' => 'required',
+            'phone' => 'required',
             'email' => 'required|email|unique:users,email,' . $user->id,
         ];
 
@@ -71,10 +68,8 @@ class Profile extends Component
     public function messages()
     {
         return [
-            'first_name.required' => 'Tên không được để trống.',
-            'last_name.required' => 'Họ không được để trống.',
-            'user_name.required' => 'Tên người dùng không được để trống.',
-            'user_name.unique' => 'Tên tài khoản đã tồn tại.',
+            'full_name.required' => 'Tên không được để trống.',
+            'phone.required' => 'Họ không được để trống.',
             'email.required' => 'Email không được để trống.',
             'email.email' => 'Địa chỉ E-mail không hợp lệ.',
             'email.unique' => 'E-mail đã tồn tại.',
@@ -105,9 +100,8 @@ class Profile extends Component
         }
 
         $data = [
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'user_name' => $this->user_name,
+            'full_name' => $this->full_name,
+            'phone' => $this->phone,
             'email' =>  $this->email,
             'avatar' => $avatar,
         ];

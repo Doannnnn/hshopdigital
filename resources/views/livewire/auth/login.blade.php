@@ -46,9 +46,9 @@
         <form class="mb-3" wire:submit.prevent="login">
             @csrf
             <div class="mb-3">
-                <label class="form-label" for="email_userName">Tên tài khoản hoặc E-mail <span class="required">*</span></label>
-                <input class="form-control @error('email_userName') is-invalid @enderror" type="text" wire:model="email_userName" id="email_userName" value="{{ old('email_userName') }}" placeholder="Nhập tài khoản hoặc E-mail" />
-                @error('email_userName')
+                <label class="form-label" for="user_name">Số điện thoại hoặc E-mail <span class="required">*</span></label>
+                <input class="form-control @error('user_name') is-invalid @enderror" type="text" wire:model="user_name" id="user_name" value="{{ old('user_name') }}" placeholder="Số điện thoại hoặc E-mail" />
+                @error('user_name')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
